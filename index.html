@@ -16,9 +16,11 @@
   <body class="bg-zinc-900 text-zinc-300">
     <header class="border-b-2 border-zinc-800/75 py-6 px-8">
       <div class="max-w-screen-lg mx-auto flex justify-between items-center">
-        <a href="/" class="flex gap-2 place-items-center">
+        <a href="/" class="group flex gap-2 place-items-center">
           <img class="w-[1.75rem]" src="assets/taskify-logo.svg" alt="taskify logo" />
-          <span class="font-semibold tracking-wide text-2xl">taskify</span>
+          <span class="font-semibold tracking-wide text-2xl text-zinc-400 group-hover:text-zinc-300"
+            >taskify</span
+          >
         </a>
 
         <button
@@ -27,5 +29,23 @@
         </button>
       </div>
     </header>
+
+    <main>
+      <div class="max-w-screen-sm mx-auto mt-16">
+        <h2 class="font-semibold text-2xl align-middle">Tasks</h2>
+        <div class="relative mt-9">
+          <form>
+            <input
+              class="py-4 pl-14 w-full bg-transparent border-2 rounded-2xl border-zinc-800/75 focus:ring-zinc-700 focus:ring-1 focus:outline-none"
+              type="text"
+              placeholder="Add a task" />
+          </form>
+          <div
+            class="absolute rounded-xl -translate-y-1/2 top-1/2 left-4 bg-gradient-to-r from-green-500 to-emerald-700 p-1">
+            <img class="w-5" src="assets/icon-plus.svg" alt="icon plus" />
+          </div>
+        </div>
+      </div>
+    </main>
   </body>
 </html>

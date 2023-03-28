@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-container {
+  @apply max-w-screen-lg mx-auto;
+}
