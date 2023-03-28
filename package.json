@@ -1,0 +1,15 @@
+{
+  "name": "w10-my-web-api-aldwiputra",
+  "version": "1.0.0",
+  "description": "Todo App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Aldiansyah Dwi Putra",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.2.7"
+  }
+}
