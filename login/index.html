@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="../assets/taskify-logo.svg" type="image/x-icon" />
     <title>Taskify | Login</title>
   </head>
-  <body class="bg-zinc-900 text-zinc-300">
+  <body class="bg-zinc-900 text-zinc-300 min-h-screen">
     <header class="border-b-2 border-zinc-800/75 py-6 px-8">
       <div class="max-w-screen-lg mx-auto flex justify-between items-center">
         <a href="/" class="group flex gap-2 place-items-center">
@@ -31,6 +31,65 @@
       </div>
     </header>
 
-    <main></main>
+    <main class="py-20">
+      <div class="max-w-[35rem] mx-auto bg-zinc-800/30 py-8 px-12 rounded-xl overflow-hidden">
+        <h1 class="text-3xl font-bold">
+          <svg
+            class="inline-block h-[1em] align-bottom mr-3"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path></svg
+          >Welcome back
+        </h1>
+        <span class="block mt-3 text-zinc-400 text-sm">Enter your username and password</span>
+
+        <div class="mt-8 h-[2px] w-full bg-zinc-800/50 scale-x-150"></div>
+
+        <form class="mt-8">
+          <div class="relative flex flex-col">
+            <label for="username" class="sr-only">Username</label>
+            <input
+              class="py-4 pl-14 placeholder:text-zinc-600 bg-transparent border-2 rounded-2xl border-zinc-800/75 focus:ring-zinc-700 focus:ring-1 focus:outline-none"
+              id="username"
+              placeholder="Username"
+              type="text" />
+            <div
+              class="absolute aspect-square rounded-xl -translate-y-1/2 top-1/2 left-4 bg-red-500/20 p-2">
+              <img class="w-4" src="/assets/icon-profile.svg" alt="icon plus" />
+            </div>
+          </div>
+          <div class="relative flex flex-col mt-8">
+            <label for="password" class="sr-only">Password</label>
+            <input
+              class="py-4 pl-14 placeholder:text-zinc-600 bg-transparent border-2 rounded-2xl border-zinc-800/75 focus:ring-zinc-700 focus:ring-1 focus:outline-none"
+              id="password"
+              placeholder="Password"
+              type="password" />
+            <div
+              class="absolute aspect-square rounded-xl -translate-y-1/2 top-1/2 left-4 bg-red-500/20 p-2">
+              <img class="w-4" src="/assets/icon-lock.svg" alt="icon plus" />
+            </div>
+          </div>
+          <button
+            class="mt-8 p-4 w-full bg-red-500 hover:bg-red-600 rounded-lg font-medium text-zinc-900"
+            type="submit">
+            Login
+          </button>
+        </form>
+
+        <div class="mt-8 h-[2px] w-full bg-zinc-800/50 scale-x-150"></div>
+
+        <p class="text-center mt-6 text-sm">
+          Don't have an account?
+          <a class="font-bold hover:underline underline-offset-2" href="/register">Register</a>
+        </p>
+      </div>
+    </main>
   </body>
 </html>
