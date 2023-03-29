@@ -49,7 +49,7 @@
         </h1>
         <span class="block mt-3 text-zinc-400 text-sm">Create your account now</span>
 
-        <div class="mt-8 h-[2px] w-full bg-zinc-800/50 scale-x-150"></div>
+        <div class="mt-8 h-[2px] bg-zinc-800/50 scale-x-150"></div>
 
         <form class="mt-8">
           <div class="relative flex flex-col">
@@ -67,7 +67,7 @@
           <div class="relative flex flex-col mt-8">
             <label for="password" class="sr-only">Password</label>
             <input
-              class="py-4 pl-14 placeholder:text-zinc-600 bg-transparent border-2 rounded-2xl border-zinc-800/75 focus:ring-zinc-700 focus:ring-1 focus:outline-none"
+              class="py-4 pl-14 pr-4 placeholder:text-zinc-600 bg-transparent border-2 rounded-2xl border-zinc-800/75 focus:ring-zinc-700 focus:ring-1 focus:outline-none"
               id="password"
               placeholder="Password"
               type="password" />
@@ -77,13 +77,13 @@
             </div>
           </div>
           <button
-            class="mt-8 p-4 w-full bg-red-500 hover:bg-red-600 rounded-lg font-medium text-zinc-900"
+            class="mt-8 p-4 w-full bg-red-500 enabled:hover:bg-red-600 rounded-lg font-medium text-zinc-900"
             type="submit">
             Register
           </button>
         </form>
 
-        <div class="mt-8 h-[2px] w-full bg-zinc-800/50 scale-x-150"></div>
+        <div class="mt-8 h-[2px] bg-zinc-800/50 scale-x-150"></div>
 
         <p class="text-center mt-6 text-sm text-zinc-400">
           Already have an account?
@@ -91,5 +91,7 @@
         </p>
       </div>
     </main>
+
+    <script src="./register.js"></script>
   </body>
 </html>
