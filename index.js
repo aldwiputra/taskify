@@ -1,6 +1,7 @@
+const logoutBtn = document.querySelector('#logout');
+
 if (!localStorage.getItem('loggedInUser')) {
   const main = document.querySelector('main');
-  const logoutBtn = document.querySelector('#logout');
 
   logoutBtn.classList.add('opacity-0');
 
@@ -15,3 +16,14 @@ if (!localStorage.getItem('loggedInUser')) {
     window.location.pathname = '/login';
   }, 2000);
 }
+
+logoutBtn.addEventListener('click', ({ target }) => {
+  target.innerHTML = `<img src="assets/spinner.svg" class="w-[1.5em] mx-auto"/>`;
+  target.disabled = true;
+  target.classList.add('w-20', 'text-center');
+  localStorage.removeItem('loggedInUser');
+
+  setTimeout(() => {
+    window.location.pathname = '/login';
+  }, 1000);
+});
