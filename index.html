@@ -31,11 +31,20 @@
       </div>
     </header>
 
-    <main class="invisible">
+    <main class="invisible px-8">
       <div class="max-w-screen-sm mx-auto mt-16">
-        <h2 class="font-semibold text-2xl align-middle">Tasks</h2>
-        <div class="relative mt-9">
-          <form>
+        <div class="flex justify-between items-center">
+          <h2 id="title" class="font-semibold text-3xl leading-none tracking-wide align-middle">
+            Tasks
+          </h2>
+          <span
+            class="block w-fit text-zinc-600 ring-[1px] bg-zinc-800/75 ring-zinc-800 tracking-wide px-3 pointer-events-none py-[6px] rounded-md font-medium text-xs"
+            >Your Tasks</span
+          >
+        </div>
+
+        <div class="relative mt-10">
+          <form id="add-new-task">
             <input
               class="py-4 pl-14 autofill:bg-red-500 w-full bg-transparent border-2 rounded-2xl border-zinc-800/75 focus:ring-zinc-700 focus:ring-1 focus:outline-none"
               type="text"
@@ -45,6 +54,12 @@
             class="absolute rounded-xl -translate-y-1/2 top-1/2 left-4 bg-gradient-to-r from-green-500 to-emerald-700 p-1">
             <img class="w-5" src="assets/icon-plus.svg" alt="icon plus" />
           </div>
+        </div>
+
+        <div class="mt-10">
+          <p id="total-text" class="font-base text-zinc-400">Total - <span>0</span></p>
+
+          <div id="task-container"></div>
         </div>
       </div>
     </main>
