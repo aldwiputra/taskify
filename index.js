@@ -1,9 +1,10 @@
 const logoutBtn = document.querySelector('#logout');
+const main = document.querySelector('main');
 
 if (!localStorage.getItem('loggedInUser')) {
-  const main = document.querySelector('main');
-
   logoutBtn.classList.add('opacity-0');
+
+  main.classList.remove('invisible');
 
   main.innerHTML = `
     <div class="w-fit mx-auto text-center flex flex-col items-center">
@@ -27,3 +28,6 @@ logoutBtn.addEventListener('click', ({ target }) => {
     window.location.pathname = '/login';
   }, 1000);
 });
+
+logoutBtn.classList.remove('invisible');
+main.classList.remove('invisible');
