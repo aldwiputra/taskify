@@ -26,14 +26,24 @@ Install the dependencies: `npm install`
 
 To use the application, run the following command:
 
-1. Run the json-server:
+1. Install json-server globally:
 
 ```sh
-npm start
+npm install -g json-server
 ```
 
-2. Run Live Server on your IDE:
+2. Run the json-server:
+
+```sh
+json-server db.json --watch
+```
+
+3. Run Live Server on your IDE:
 
 ```sh
 > Live Server: Open with Live Server
 ```
+
+## Tech Stack
+
+[![My Skills](https://skillicons.dev/icons?i=js,html,css,tailwind,vscode)](https://skillicons.dev)
