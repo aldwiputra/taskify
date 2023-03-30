@@ -5,3 +5,11 @@
 .custom-container {
   @apply max-w-screen-lg mx-auto;
 }
+
+.task-item input[type='checkbox']:checked + span {
+  @apply line-through;
+}
+
+.task-item input[type='checkbox']:checked ~ div {
+  @apply opacity-100;
+}
