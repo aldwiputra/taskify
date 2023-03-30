@@ -7,9 +7,17 @@
 }
 
 .task-item input[type='checkbox']:checked + span {
-  @apply line-through;
+  @apply line-through decoration-1;
 }
 
 .task-item input[type='checkbox']:checked ~ div {
   @apply opacity-100;
+}
+body::-webkit-scrollbar {
+  width: 0.5em;
+  @apply bg-zinc-800;
+}
+body::-webkit-scrollbar-thumb {
+  @apply bg-zinc-900 shadow-inner shadow-zinc-600;
+  border-radius: 1rem;
 }

@@ -32,7 +32,7 @@
     </header>
 
     <main class="invisible px-8">
-      <div class="max-w-screen-md mx-auto mt-16">
+      <div class="max-w-screen-md mx-auto my-16">
         <div class="flex justify-between items-center">
           <h2 id="title" class="font-semibold text-3xl leading-none tracking-wide align-middle">
             Tasks
@@ -51,7 +51,7 @@
               placeholder="Add a task" />
           </form>
           <div
-            class="absolute rounded-xl -translate-y-1/2 top-1/2 left-4 bg-gradient-to-r from-green-600 to-emerald-700 p-1">
+            class="absolute rounded-xl -translate-y-1/2 top-1/2 left-4 bg-gradient-to-r from-teal-700 to-teal-800 p-1">
             <img class="w-5" src="assets/icon-plus.svg" alt="icon plus" />
           </div>
         </div>
@@ -59,10 +59,14 @@
         <div class="mt-10">
           <p id="total-text" class="font-base text-zinc-400">Total - <span>0</span></p>
 
-          <div id="task-container"></div>
+          <ul id="task-container"></ul>
         </div>
       </div>
     </main>
+
+    <div
+      id="detail-overlay"
+      class="fixed bg-zinc-800/80 backdrop-blur-[2px] inset-0 flex place-items-center invisible"></div>
 
     <script src="index.js"></script>
   </body>

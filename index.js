@@ -92,7 +92,7 @@ async function renderTasks() {
 
 function taskComponent(taskData) {
   return `
-    <div class="task-item py-6 pl-8 pr-6 bg-zinc-800/30 rounded-2xl mt-4 flex justify-between items-center">
+    <li class="task-item py-6 pl-8 pr-6 bg-zinc-800/30 rounded-2xl mt-4 flex justify-between items-center">
       <label
       for="done-${taskData.id}"
       class="inline-block flex-1 relative pl-[3em] leading-none cursor-pointer py-1 text-zinc-400 rounded-md bg-transparent focus:outline-0">
@@ -123,27 +123,27 @@ function taskComponent(taskData) {
       <div class="flex gap-[.75rem]">
         <button 
           title="Delete"
-          class="group w-10 h-10 rounded-xl bg-red-500/10 hover:bg-red-500/20 p-2"
+          class="group w-9 h-9 rounded-xl bg-red-500/10 hover:bg-red-500/20 p-[7px]"
           onclick="deleteTaskHandler(${taskData.id})"
           >
           <span class="sr-only">Delete</span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full stroke-red-500 group-hover:stroke-red-500">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full stroke-red-500">
           <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
           </svg>
         </button>
 
         <button
           title="Show Details"
-          class="group w-10 h-10 rounded-xl hover:bg-green-600/20 bg-green-600/10 p-2"
+          class="group w-9 h-9 rounded-xl bg-teal-700/10 hover:bg-teal-700/20 p-[7px]"
           onclick="showDetailsHandler(${taskData.id})"
         >
           <span class="sr-only">Delete</span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="stroke-green-600 w-full h-full">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="stroke-teal-700 w-full h-full">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
           </svg>
         </button>
       </div>
-    </div>
+    </li>
   `;
 }
 
@@ -253,4 +253,42 @@ async function createNewTask(inputValue) {
   }
 
   return await res.json();
+}
+
+/* ------------------------------------------------------------------------------------------------- */
+/* ------------------------------------ SHOW DETAILS ----------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------- */
+
+async function showDetailsHandler(id) {
+  try {
+    const res = await fetch(`${TASKS_URL}/${id}`);
+    const data = await res.json();
+
+    const detailOverlayElement = document.querySelector('#detail-overlay');
+
+    detailOverlayElement.innerHTML = `
+    <div class="w-fit h-fit mx-auto p-6 bg-zinc-900 rounded-xl overflow-x-hidden">
+      <div class="flex justify-between items-center gap-16">
+        <pre class="italic bg-zinc-800/75 py-1 px-2 rounded-md text-sm">Task Id: ${data.id}</pre>
+        <span class="text-sm text-zinc-400">Status: <span class="px-3 py-1 ml-1 rounded-full text-sm ${
+          data.done ? 'bg-teal-700/20 text-teal-700' : 'bg-amber-700/20 text-amber-600'
+        }">${data.done ? 'Completed' : 'In Progress'}</span></span>
+      </div>
+
+      <div class="h-[2px] mt-6 w-full bg-zinc-800/50 scale-x-[1.2]"></div>
+      
+      <h4 class="mt-8">${data.name}</h4>
+      <button
+        class="w-full mt-8 bg-red-500/20 text-red-500 rounded-md py-2 hover:bg-red-500/40"
+        onclick="closeDetailsOverlay()">Close</button>
+    </div>
+    `;
+
+    detailOverlayElement.classList.remove('invisible');
+  } catch (err) {}
+}
+
+function closeDetailsOverlay() {
+  const detailOverlayElement = document.querySelector('#detail-overlay');
+  detailOverlayElement.classList.add('invisible');
 }

@@ -2,7 +2,7 @@
   "tasks": [
     {
       "name": "Suburrrr ini kan yang kamu mau?",
-      "done": false,
+      "done": true,
       "id": 1
     },
     {
@@ -11,9 +11,19 @@
       "id": 2
     },
     {
-      "name": "mamam yang banyak ehehe",
+      "name": "Makan yang banyak",
       "done": false,
       "id": 3
+    },
+    {
+      "name": "Jangan lupa bahagia",
+      "done": false,
+      "id": 4
+    },
+    {
+      "name": "Jangan lupa bahahuwe huwe hizzz",
+      "done": false,
+      "id": 5
     }
   ]
 }
