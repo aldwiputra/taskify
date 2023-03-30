@@ -3,6 +3,7 @@ const TASKS_URL = 'http://localhost:3000/tasks';
 const logoutBtn = document.querySelector('#logout');
 const main = document.querySelector('main');
 const user = localStorage.getItem('loggedInUser');
+const totalText = document.querySelector('#total-text > span');
 
 if (!user) {
   logoutBtn.classList.add('opacity-0');
@@ -63,6 +64,8 @@ async function renderTasks() {
   try {
     const result = await getAllTasks();
 
+    totalText.innerText = result.length;
+
     if (result.length === 0) {
       taskContainer.innerHTML = `
         <div class="rounded-xl pt-12 pb-8 bg-zinc-800/30 mt-4">
@@ -78,7 +81,6 @@ async function renderTasks() {
     let taskElements = '';
 
     result.forEach(element => {
-      console.log(element);
       taskElements += taskComponent(element);
     });
 
@@ -93,7 +95,7 @@ function taskComponent(taskData) {
     <div class="task-item py-6 px-8 bg-zinc-800/30 rounded-2xl mt-4 flex justify-between items-center">
       <label
       for="done-${taskData.id}"
-      class="inline-block flex-1 relative pl-[3em] leading-none cursor-pointer py-1 text-zinc-400 rounded-md text-lg bg-transparent focus:outline-0 font-medium">
+      class="inline-block flex-1 relative pl-[3em] leading-none cursor-pointer py-1 text-zinc-400 rounded-md bg-transparent focus:outline-0">
         <input
         id="done-${taskData.id}"
         onchange="onChangeHandler(event, ${taskData.id})"
@@ -123,7 +125,7 @@ function taskComponent(taskData) {
         onclick="deleteTaskHandler(${taskData.id})"
         >
         <span class="sr-only">Delete</span>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-full h-full group-hover:stroke-red-500">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#a1a1aa" class="w-full h-full group-hover:stroke-red-500">
           <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
         </svg>
       </button>
@@ -203,3 +205,38 @@ async function deleteTaskHandler(id) {
 /* ------------------------------------------------------------------------------------------------- */
 
 const addNewTaskForm = document.querySelector('#add-new-task');
+
+addNewTaskForm.addEventListener('submit', async event => {
+  event.preventDefault();
+
+  let input = event.target.querySelector('input');
+  if (input.value === '') {
+    console.log('cannot be empty la');
+    return;
+  }
+
+  try {
+    const res = await createNewTask(input.value);
+    input.value = '';
+    renderTasks();
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+async function createNewTask(inputValue) {
+  const res = await fetch(TASKS_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: inputValue,
+      done: false,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(res.status);
+  }
+
+  return await res.json();
+}

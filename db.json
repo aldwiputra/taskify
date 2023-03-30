@@ -1,3 +1,14 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "name": "Suburrrr ini kan yang kamu mau?",
+      "done": false,
+      "id": 1
+    },
+    {
+      "name": "Eyang subur the OG",
+      "done": false,
+      "id": 2
+    }
+  ]
 }
