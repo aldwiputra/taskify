@@ -267,19 +267,27 @@ async function showDetailsHandler(id) {
     const detailOverlayElement = document.querySelector('#detail-overlay');
 
     detailOverlayElement.innerHTML = `
-    <div class="w-fit h-fit mx-auto p-6 bg-zinc-900 rounded-xl overflow-x-hidden">
+    <div class="w-96 h-fit mx-auto p-6 bg-zinc-900 rounded-xl overflow-x-hidden">
       <div class="flex justify-between items-center gap-16">
-        <pre class="italic bg-zinc-800/75 py-1 px-2 rounded-md text-sm">Task Id: ${data.id}</pre>
+        <pre class="italic bg-zinc-800/50 py-1 px-2 rounded-md text-sm text-zinc-400 font-medium">Task Id: ${
+          data.id
+        }</pre>
         <span class="text-sm text-zinc-400">Status: <span class="px-3 py-1 ml-1 rounded-full text-sm ${
-          data.done ? 'bg-teal-700/20 text-teal-700' : 'bg-amber-700/20 text-amber-600'
+          data.done ? 'bg-green-700/20 text-green-700' : 'bg-amber-700/20 text-amber-600'
         }">${data.done ? 'Completed' : 'In Progress'}</span></span>
       </div>
 
       <div class="h-[2px] mt-6 w-full bg-zinc-800/50 scale-x-[1.2]"></div>
-      
-      <h4 class="mt-8">${data.name}</h4>
+
+
+      <div class="rounded-full p-3 w-14 h-14 bg-zinc-800/20 mx-auto mt-8 ring-2 ring-zinc-500/20">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="stroke-zinc-500/50 w-full h-full">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+        </svg>
+      </div>
+      <h4 class="mt-4 font-medium text-lg text-center">${data.name}</h4>
       <button
-        class="w-full mt-8 bg-red-500/20 text-red-500 rounded-md py-2 hover:bg-red-500/40"
+        class="w-full mt-8 bg-red-500/20 text-red-500 rounded-md py-2 hover:bg-red-500/30"
         onclick="closeDetailsOverlay()">Close</button>
     </div>
     `;
