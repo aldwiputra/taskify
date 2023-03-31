@@ -80,7 +80,7 @@ async function renderTasks() {
 
     let taskElements = '';
 
-    result.forEach(element => {
+    result.forEach((element) => {
       taskElements += taskComponent(element);
     });
 
@@ -220,7 +220,7 @@ async function deleteTaskHandler(id) {
 
 const addNewTaskForm = document.querySelector('#add-new-task');
 
-addNewTaskForm.addEventListener('submit', async event => {
+addNewTaskForm.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   let input = event.target.querySelector('input');
