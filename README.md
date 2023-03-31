@@ -13,6 +13,7 @@ Access the documentation link at: [API Documentation Link](https://documenter.ge
 - [Register](http://localhost:5500/register)
 - [Login](http://localhost:5500/login)
 - [Home](http://localhost:5500)
+- [Countries](http://localhost:5500/countries)
 
 ## Installation
 

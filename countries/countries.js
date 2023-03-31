@@ -64,10 +64,10 @@ function getContinentColor(continent) {
       return 'bg-sky-500/20 text-sky-600';
       break;
     case 'Asia':
-      return 'bg-red-700/20 text-red-700';
+      return 'bg-red-800/20 text-red-800';
       break;
     case 'Europe':
-      return 'bg-blue-600/20 text-blue-600';
+      return 'bg-blue-700/20 text-blue-700';
       break;
     case 'North America':
       return 'bg-slate-600/20 text-slate-600';
