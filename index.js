@@ -267,52 +267,48 @@ async function showDetailsHandler(id) {
     const detailOverlayElement = document.querySelector('#detail-overlay');
 
     detailOverlayElement.innerHTML = `
-    <div class="w-[28rem] h-fit mx-auto p-6 bg-zinc-900 rounded-xl overflow-x-hidden">
-      <div class="flex justify-between items-center gap-16">
-        <pre class="italic bg-zinc-800/50 py-1 px-2 rounded-md text-sm text-zinc-400 font-medium">Task Id: ${
-          data.id
-        }</pre>
-        <span class="text-sm text-zinc-400">Status: <span class="px-3 py-1 ml-1 rounded-full text-sm ${
-          data.done ? 'bg-green-700/20 text-green-700' : 'bg-amber-700/20 text-amber-600'
-        }">${data.done ? 'Completed' : 'In Progress'}</span></span>
-      </div>
+      <div class="w-[28rem] h-fit mx-auto p-6 bg-zinc-900 rounded-xl overflow-x-hidden">
+        <div class="flex justify-between items-center gap-16">
+          <pre class="italic bg-zinc-800/50 py-1 px-2 rounded-md text-sm text-zinc-400 font-medium">Task Id: ${
+            data.id
+          }</pre>
+          <span class="text-sm text-zinc-400">Status: <span class="px-3 py-1 ml-1 rounded-full text-sm ${
+            data.done ? 'bg-green-700/20 text-green-700' : 'bg-amber-700/20 text-amber-600'
+          }">${data.done ? 'Completed' : 'In Progress'}</span></span>
+        </div>
 
-      <div class="h-[2px] mt-6 w-full bg-zinc-800/50 scale-x-[1.2]"></div>
+        <div class="h-[2px] mt-6 w-full bg-zinc-800/50 scale-x-[1.2]"></div>
 
-      <div class="rounded-full p-3 w-14 h-14 bg-zinc-800/20 mx-auto mt-8 ring-2 ring-zinc-800/50">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="stroke-zinc-500/50 w-full h-full">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122" />
-        </svg>
-      </div>
-      
-      <div class="relative mt-8">
-        <input class="w-full py-3 pl-3 pr-24 rounded-md font-medium bg-transparent text-zinc-400 border-2 border-dashed border-zinc-400/10 focus:outline-none" value="${
-          data.name
-        }"/>
-        <button
-          onclick="saveNameChange(event, ${data.id}, ${data.done})" 
-          class="absolute z-10 right-3 top-1/2 -translate-y-1/2 bg-zinc-800/50 hover:bg-zinc-800 text-zinc-400/50  px-2 py-1 rounded-md text-sm font-medium">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="pointer-events-none w-5 h-5 inline mr-1 stroke-zinc-400/50">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9" />
+        <div class="rounded-full p-3 w-14 h-14 bg-zinc-800/20 mx-auto mt-8 ring-2 ring-zinc-800/50">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="stroke-zinc-500/50 w-full h-full">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122" />
           </svg>
+        </div>
+        
+        <div class="relative mt-8">
+          <input class="w-full py-3 pl-3 pr-24 rounded-md font-medium bg-transparent text-zinc-400 border-2 border-dashed border-zinc-400/10 focus:outline-none" value="${
+            data.name
+          }"/>
+          <button
+            onclick="saveNameChange(event, ${data.id}, ${data.done})" 
+            class="absolute z-10 right-3 top-1/2 -translate-y-1/2 bg-zinc-800/50 hover:bg-zinc-800 text-zinc-400/50  px-2 py-1 rounded-md text-sm font-medium">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="pointer-events-none w-5 h-5 inline mr-1 stroke-zinc-400/50">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9" />
+            </svg>
 
-          Save
-        </button>
+            Save
+          </button>
+        </div>
+        <button
+          class="w-full mt-8 bg-red-500/20 text-red-500 rounded-md py-2 hover:bg-red-500/30"
+          onclick="closeDetailsOverlay()">Close</button>
       </div>
-      <button
-        class="w-full mt-8 bg-red-500/20 text-red-500 rounded-md py-2 hover:bg-red-500/30"
-        onclick="closeDetailsOverlay()">Close</button>
-    </div>
     `;
 
     detailOverlayElement.classList.remove('invisible');
   } catch (err) {
     console.error(err);
   }
-}
-
-{
-  /* <h4 class="mt-3 font-medium text-lg text-center text-zinc-400">${data.name}</h4> */
 }
 
 async function saveNameChange(e, id, done) {
