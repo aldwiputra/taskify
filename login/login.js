@@ -5,13 +5,11 @@ const username = document.querySelector('#username');
 const password = document.querySelector('#password');
 const button = document.querySelector('button[type="submit"]');
 
-form.addEventListener('submit', event => {
+form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
-  const users = getUsersData(USERS_KEY);
-  const isValid = users.find(
-    user => user.username === username.value && user.password === password.value
-  );
+  const user = await findUser(username.value);
+  const isValid = user[0]?.username === username.value && user[0]?.password === password.value;
 
   button.innerHTML = `
         <svg class="w-[1.5em] mx-auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -45,8 +43,12 @@ form.addEventListener('submit', event => {
   }
 });
 
-function getUsersData(key) {
-  const users = localStorage.getItem(key);
+async function findUser(username) {
+  const res = await fetch(`http://localhost:3000/users?username=${username}`);
 
-  return users === null ? [] : JSON.parse(users);
+  if (!res.ok) {
+    throw new Error(res.statusText);
+  }
+
+  return await res.json();
 }
