@@ -86,7 +86,15 @@ async function renderTasks() {
 
     taskContainer.innerHTML = taskElements;
   } catch (err) {
-    console.log(err);
+    taskContainer.innerHTML = `
+      <div class="rounded-xl pt-12 pb-8 bg-zinc-800/30 mt-4">
+        <span class="block text-center text-sm font-medium text-zinc-500">Something wrong while fetching the data </span>
+        <h4 class="text-center font-medium text-zinc-400 text-2xl mt-2">Failed fetching the data</h4>
+        <img src="/assets/illustration-empty.png" class="mt-4 mx-auto grayscale aspect-square"/>
+      </div>
+      `;
+
+    return;
   }
 }
 
