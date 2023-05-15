@@ -3,11 +3,10 @@ const TASKS_URL = 'http://localhost:3000';
 const logoutBtn = document.querySelector('#logout');
 const main = document.querySelector('main');
 const totalText = document.querySelector('#total-text > span');
-let user;
 
 async function isUserLoggedIn() {
   try {
-    const response = await fetch(`${TASKS_URL}/users/me`);
+    const response = await fetch(`${TASKS_URL}/users/me`, { credentials: 'include' });
     const result = await response.json();
 
     return result;
@@ -17,6 +16,7 @@ async function isUserLoggedIn() {
 }
 
 isUserLoggedIn().then(res => {
+  console.log(res);
   if (res.error) {
     logoutBtn.classList.add('opacity-0');
 
@@ -63,7 +63,7 @@ isUserLoggedIn().then(res => {
   main.classList.remove('invisible');
 
   const title = document.querySelector('#title');
-  title.innerText = `Hello, ${res.username.toUpperCase() + user.slice(1).toLowerCase()}!`;
+  title.innerText = `Hello, ${res.username[0].toUpperCase() + res.username.slice(1).toLowerCase()}!`;
 });
 
 /* ------------------------------------------------------------------------------------------------- */
@@ -72,7 +72,7 @@ isUserLoggedIn().then(res => {
 
 const taskContainer = document.querySelector('#task-container');
 
-renderTasks();
+// renderTasks();
 
 async function renderTasks() {
   try {

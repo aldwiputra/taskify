@@ -1,15 +1,13 @@
 const USERS_KEY = 'users';
+const API_ENDPOINT = 'http://localhost:3000';
 
 const form = document.querySelector('form');
-const username = document.querySelector('#username');
-const password = document.querySelector('#password');
+const usernameInput = document.querySelector('#username');
+const passwordInput = document.querySelector('#password');
 const button = document.querySelector('button[type="submit"]');
 
-form.addEventListener('submit', async (event) => {
+form.addEventListener('submit', async event => {
   event.preventDefault();
-
-  const user = await findUser(username.value);
-  const isValid = user[0]?.username === username.value && user[0]?.password === password.value;
 
   button.innerHTML = `
         <svg class="w-[1.5em] mx-auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -28,27 +26,32 @@ form.addEventListener('submit', async (event) => {
   button.classList.add('bg-red-500/50');
   button.disabled = true;
 
-  if (!isValid) {
-    setTimeout(() => {
-      alert('Username or password is wrong');
-      button.innerText = 'Login';
-      button.classList.remove('bg-red-500/50');
-      button.disabled = false;
-    }, 1000);
+  const loginRes = await login(usernameInput.value, passwordInput.value);
+
+  if (loginRes && !loginRes.success) {
+    alert(loginRes.message);
+    button.innerText = 'Login';
+    button.classList.remove('bg-red-500/50');
+    button.disabled = false;
   } else {
-    setTimeout(() => {
-      localStorage.setItem('loggedInUser', username.value);
-      window.location.pathname = '/';
-    }, 1000);
+    window.location.pathname = '/';
   }
 });
 
-async function findUser(username) {
-  const res = await fetch(`http://localhost:3000/users?username=${username}`);
+async function login(username, password) {
+  try {
+    const res = await fetch(`${API_ENDPOINT}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+      credentials: 'include',
+    });
 
-  if (!res.ok) {
-    throw new Error(res.statusText);
+    return await res.json();
+  } catch (err) {
+    console.log(err);
   }
-
-  return await res.json();
 }
