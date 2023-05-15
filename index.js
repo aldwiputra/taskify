@@ -1,56 +1,70 @@
-const TASKS_URL = 'http://localhost:3000/tasks';
+const TASKS_URL = 'http://localhost:3000';
 
 const logoutBtn = document.querySelector('#logout');
 const main = document.querySelector('main');
-const user = localStorage.getItem('loggedInUser');
 const totalText = document.querySelector('#total-text > span');
+let user;
 
-if (!user) {
-  logoutBtn.classList.add('opacity-0');
+async function isUserLoggedIn() {
+  try {
+    const response = await fetch(`${TASKS_URL}/users/me`);
+    const result = await response.json();
 
-  main.classList.remove('invisible');
-
-  main.innerHTML = `
-    <div class="w-fit mx-auto text-center flex flex-col items-center">
-      <h1 class="text-3xl text-center font-semibold mt-24 text-zinc-400">You're not logged in. Redirecting now...</h1>
-      <img src="/assets/illustration-lock.png" alt="unlock illustration" class="text-center mt-12 -translate-x-8"/>
-    </div>
-  `;
-
-  setTimeout(() => {
-    window.location.pathname = '/login';
-  }, 2000);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-logoutBtn.addEventListener('click', ({ target }) => {
-  target.innerHTML = `
-  <svg class="w-[1.5em] mx-auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-    <circle cx="30" cy="50" fill="#ef4444" r="20">
-    <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="-0.5s"></animate>
-    </circle>
-    <circle cx="70" cy="50" fill="#b91c1c" r="20">
-    <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="0s"></animate>
-    </circle>
-    <circle cx="30" cy="50" fill="#ef4444" r="20">
-    <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="-0.5s"></animate>
-    <animate attributeName="fill-opacity" values="0;0;1;1" calcMode="discrete" keyTimes="0;0.499;0.5;1" dur="1s" repeatCount="indefinite"></animate>
-    </circle>
-  </svg>
-  `;
-  target.disabled = true;
-  target.classList.add('w-20', 'text-center');
-  localStorage.removeItem('loggedInUser');
+isUserLoggedIn().then(res => {
+  if (res.error) {
+    logoutBtn.classList.add('opacity-0');
 
-  setTimeout(() => {
-    window.location.pathname = '/login';
-  }, 2000);
+    main.innerHTML = `
+    <div class="w-fit mx-auto text-center flex flex-col items-center">
+    <h1 class="text-3xl text-center font-semibold mt-24 text-zinc-400">You're not logged in. Redirecting now...</h1>
+    <img src="/assets/illustration-lock.png" alt="unlock illustration" class="text-center mt-12 -translate-x-8"/>
+    </div>
+    `;
+    main.classList.remove('invisible');
+
+    setTimeout(() => {
+      window.location.pathname = '/login';
+    }, 2000);
+
+    return;
+  }
+
+  logoutBtn.addEventListener('click', ({ target }) => {
+    target.innerHTML = `
+    <svg class="w-[1.5em] mx-auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+      <circle cx="30" cy="50" fill="#ef4444" r="20">
+      <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="-0.5s"></animate>
+      </circle>
+      <circle cx="70" cy="50" fill="#b91c1c" r="20">
+      <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="0s"></animate>
+      </circle>
+      <circle cx="30" cy="50" fill="#ef4444" r="20">
+      <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="-0.5s"></animate>
+      <animate attributeName="fill-opacity" values="0;0;1;1" calcMode="discrete" keyTimes="0;0.499;0.5;1" dur="1s" repeatCount="indefinite"></animate>
+      </circle>
+    </svg>
+    `;
+    target.disabled = true;
+    target.classList.add('w-20', 'text-center');
+    localStorage.removeItem('loggedInUser');
+
+    setTimeout(() => {
+      window.location.pathname = '/login';
+    }, 2000);
+  });
+
+  logoutBtn.classList.remove('invisible');
+  main.classList.remove('invisible');
+
+  const title = document.querySelector('#title');
+  title.innerText = `Hello, ${res.username.toUpperCase() + user.slice(1).toLowerCase()}!`;
 });
-
-logoutBtn.classList.remove('invisible');
-main.classList.remove('invisible');
-
-const title = document.querySelector('#title');
-title.innerText = `Hello, ${user[0].toUpperCase() + user.slice(1).toLowerCase()}!`;
 
 /* ------------------------------------------------------------------------------------------------- */
 /* ---------------------------------- LOAD TASKS DATA ---------------------------------------------- */
@@ -80,7 +94,7 @@ async function renderTasks() {
 
     let taskElements = '';
 
-    result.forEach((element) => {
+    result.forEach(element => {
       taskElements += taskComponent(element);
     });
 
@@ -129,7 +143,7 @@ function taskComponent(taskData) {
       </label>
 
       <div class="flex gap-[.75rem]">
-        <button 
+        <button
           title="Delete"
           class="group w-9 h-9 rounded-xl bg-red-500/10 hover:bg-red-500/20 p-[7px]"
           onclick="deleteTaskHandler(${taskData.id})"
@@ -228,7 +242,7 @@ async function deleteTaskHandler(id) {
 
 const addNewTaskForm = document.querySelector('#add-new-task');
 
-addNewTaskForm.addEventListener('submit', async (event) => {
+addNewTaskForm.addEventListener('submit', async event => {
   event.preventDefault();
 
   let input = event.target.querySelector('input');
@@ -292,13 +306,13 @@ async function showDetailsHandler(id) {
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122" />
           </svg>
         </div>
-        
+
         <div class="relative mt-8">
           <input class="w-full py-3 pl-3 pr-24 rounded-md font-medium bg-transparent text-zinc-400 border-2 border-dashed border-zinc-400/10 focus:outline-none" value="${
             data.name
           }"/>
           <button
-            onclick="saveNameChange(event, ${data.id}, ${data.done})" 
+            onclick="saveNameChange(event, ${data.id}, ${data.done})"
             class="absolute z-10 right-3 top-1/2 -translate-y-1/2 bg-zinc-800/50 hover:bg-zinc-800 text-zinc-400/50  px-2 py-1 rounded-md text-sm font-medium">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="pointer-events-none w-5 h-5 inline mr-1 stroke-zinc-400/50">
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9" />
