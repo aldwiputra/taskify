@@ -4,6 +4,8 @@ const logoutBtn = document.querySelector('#logout');
 const main = document.querySelector('main');
 const totalText = document.querySelector('#total-text > span');
 
+const loadingSpinner = document.querySelector('#loading-spinner');
+
 async function isUserLoggedIn() {
   try {
     const response = await fetch(`${TASKS_URL}/users/me`, { credentials: 'include' });
@@ -16,7 +18,6 @@ async function isUserLoggedIn() {
 }
 
 isUserLoggedIn().then(res => {
-  console.log(res);
   if (res.error) {
     logoutBtn.classList.add('opacity-0');
 
@@ -26,7 +27,6 @@ isUserLoggedIn().then(res => {
     <img src="/assets/illustration-lock.png" alt="unlock illustration" class="text-center mt-12 -translate-x-8"/>
     </div>
     `;
-    main.classList.remove('invisible');
 
     setTimeout(() => {
       window.location.pathname = '/login';
@@ -60,7 +60,7 @@ isUserLoggedIn().then(res => {
   });
 
   logoutBtn.classList.remove('invisible');
-  main.classList.remove('invisible');
+  loadingSpinner.classList.add('invisible');
 
   const title = document.querySelector('#title');
   title.innerText = `Hello, ${res.username[0].toUpperCase() + res.username.slice(1).toLowerCase()}!`;
