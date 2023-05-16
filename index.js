@@ -72,7 +72,7 @@ isUserLoggedIn().then(res => {
 
 const taskContainer = document.querySelector('#task-container');
 
-// renderTasks();
+renderTasks();
 
 async function renderTasks() {
   try {
@@ -113,6 +113,7 @@ async function renderTasks() {
 }
 
 function taskComponent(taskData) {
+  console.log(taskData);
   return `
     <li class="task-item py-6 pl-8 pr-6 bg-zinc-800/30 rounded-2xl mt-4 flex justify-between items-center">
       <label
@@ -124,7 +125,7 @@ function taskComponent(taskData) {
         type="checkbox" ${taskData.done ? 'checked' : ''}
         class="absolute cursor-pointer top-1/2 left-0 h-[120%] aspect-square -translate-y-1/2 appearance-none border-[3px] border-red-500 rounded-[0.85rem]"
         />
-        <span class="inline-block align-middle leading-none">${taskData.name}</span>
+        <span class="inline-block align-middle leading-none">${taskData.title}</span>
         <div class="transition-opacity pointer-events-none h-[120%] absolute opacity-0 -translate-y-1/2 top-1/2 left-0 aspect-square rounded-[0.85rem] bg-gradient-to-r from-red-500 to-red-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -170,13 +171,13 @@ function taskComponent(taskData) {
 }
 
 async function getAllTasks() {
-  const res = await fetch(TASKS_URL + '?_sort=id&_order=desc');
+  try {
+    const res = await fetch(`${TASKS_URL}/tasks`, { credentials: 'include' });
 
-  if (!res.ok) {
-    throw new Error(res.statusText);
+    return await res.json();
+  } catch (err) {
+    console.log(err);
   }
-
-  return await res.json();
 }
 
 /* ------------------------------------------------------------------------------------------------- */
