@@ -1,4 +1,4 @@
-const TASKS_URL = 'http://localhost:3000';
+const TASKS_URL = 'http://localhost:4000';
 
 const logoutBtn = document.querySelector('#logout');
 const main = document.querySelector('main');
@@ -17,7 +17,7 @@ async function isUserLoggedIn() {
   }
 }
 
-isUserLoggedIn().then(res => {
+isUserLoggedIn().then((res) => {
   if (res.error) {
     logoutBtn.classList.add('opacity-0');
 
@@ -35,7 +35,7 @@ isUserLoggedIn().then(res => {
     return;
   }
 
-  logoutBtn.addEventListener('click', ({ target }) => {
+  logoutBtn.addEventListener('click', async ({ target }) => {
     target.innerHTML = `
     <svg class="w-[1.5em] mx-auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
       <circle cx="30" cy="50" fill="#ef4444" r="20">
@@ -52,7 +52,13 @@ isUserLoggedIn().then(res => {
     `;
     target.disabled = true;
     target.classList.add('w-20', 'text-center');
-    localStorage.removeItem('loggedInUser');
+
+    const logoutResponse = await logoutUser();
+
+    if (!logoutResponse.success) {
+      alert('Logout failed');
+      target.disabled = false;
+    }
 
     setTimeout(() => {
       window.location.pathname = '/login';
@@ -63,8 +69,23 @@ isUserLoggedIn().then(res => {
   loadingSpinner.classList.add('invisible');
 
   const title = document.querySelector('#title');
-  title.innerText = `Hello, ${res.username[0].toUpperCase() + res.username.slice(1).toLowerCase()}!`;
+  title.innerText = `Hello, ${
+    res.username[0].toUpperCase() + res.username.slice(1).toLowerCase()
+  }!`;
 });
+
+async function logoutUser() {
+  try {
+    const res = await fetch(`${TASKS_URL}/auth/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    return await res.json();
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 /* ------------------------------------------------------------------------------------------------- */
 /* ---------------------------------- LOAD TASKS DATA ---------------------------------------------- */
@@ -94,7 +115,7 @@ async function renderTasks() {
 
     let taskElements = '';
 
-    result.forEach(element => {
+    result.forEach((element) => {
       taskElements += taskComponent(element);
     });
 
@@ -187,13 +208,14 @@ async function getAllTasks() {
 async function editTaskById(id, isDone, taskName = '') {
   const labelValue = document.querySelector(`label[for="done-${id}"] > span`).textContent;
 
-  const res = await fetch(`${TASKS_URL}/${id}`, {
+  const res = await fetch(`${TASKS_URL}/tasks/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      name: taskName ? taskName : labelValue,
+      title: taskName ? taskName : labelValue,
       done: isDone,
     }),
+    credentials: 'include',
   });
 
   if (!res.ok) {
@@ -219,6 +241,7 @@ async function onChangeHandler(event, id) {
 async function deleteTaskById(id) {
   const res = await fetch(`${TASKS_URL}/${id}`, {
     method: 'DELETE',
+    credentials: 'include',
   });
 
   if (!res.ok) {
@@ -243,7 +266,7 @@ async function deleteTaskHandler(id) {
 
 const addNewTaskForm = document.querySelector('#add-new-task');
 
-addNewTaskForm.addEventListener('submit', async event => {
+addNewTaskForm.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   let input = event.target.querySelector('input');

@@ -1,12 +1,12 @@
 const USERS_KEY = 'users';
-const API_ENDPOINT = 'http://localhost:3000';
+const API_ENDPOINT = 'http://localhost:4000';
 
 const form = document.querySelector('form');
 const usernameInput = document.querySelector('#username');
 const passwordInput = document.querySelector('#password');
 const button = document.querySelector('button[type="submit"]');
 
-form.addEventListener('submit', async event => {
+form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   button.innerHTML = `
@@ -28,7 +28,7 @@ form.addEventListener('submit', async event => {
 
   const loginRes = await login(usernameInput.value, passwordInput.value);
 
-  if (loginRes && !loginRes.success) {
+  if (loginRes && loginRes.error) {
     alert(loginRes.message);
     button.innerText = 'Login';
     button.classList.remove('bg-red-500/50');
