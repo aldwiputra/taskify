@@ -239,7 +239,7 @@ async function onChangeHandler(event, id) {
 /* ------------------------------------------------------------------------------------------------- */
 
 async function deleteTaskById(id) {
-  const res = await fetch(`${TASKS_URL}/${id}`, {
+  const res = await fetch(`${TASKS_URL}/tasks/${id}`, {
     method: 'DELETE',
     credentials: 'include',
   });
@@ -271,7 +271,7 @@ addNewTaskForm.addEventListener('submit', async (event) => {
 
   let input = event.target.querySelector('input');
   if (input.value === '') {
-    console.log('cannot be empty la');
+    alert('cannot be empty la');
     return;
   }
 
@@ -285,13 +285,14 @@ addNewTaskForm.addEventListener('submit', async (event) => {
 });
 
 async function createNewTask(inputValue) {
-  const res = await fetch(TASKS_URL, {
+  const res = await fetch(`${TASKS_URL}/tasks`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      name: inputValue,
+      title: inputValue,
       done: false,
     }),
+    credentials: 'include',
   });
 
   if (!res.ok) {
@@ -307,7 +308,7 @@ async function createNewTask(inputValue) {
 
 async function showDetailsHandler(id) {
   try {
-    const res = await fetch(`${TASKS_URL}/${id}`);
+    const res = await fetch(`${TASKS_URL}/tasks/${id}`, { credentials: 'include' });
     const data = await res.json();
 
     const detailOverlayElement = document.querySelector('#detail-overlay');
@@ -333,7 +334,7 @@ async function showDetailsHandler(id) {
 
         <div class="relative mt-8">
           <input class="w-full py-3 pl-3 pr-24 rounded-md font-medium bg-transparent text-zinc-400 border-2 border-dashed border-zinc-400/10 focus:outline-none" value="${
-            data.name
+            data.title
           }"/>
           <button
             onclick="saveNameChange(event, ${data.id}, ${data.done})"
